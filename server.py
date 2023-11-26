@@ -68,7 +68,7 @@ class Server:
                         file_name, client_username = fname_username
                         list_clients = self.discover_file(file_name, client_username)
                         try:
-                            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+                            db = mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db')
                             mycursor = db.cursor()
                             query = f"SELECT username FROM account WHERE fname = '{file_name}';"
                             mycursor.execute(query)
@@ -139,7 +139,7 @@ class Server:
                 break
     
     def add_to_database(self, username, passw, port, ipaddr, fname, fpath):
-        db = mysql.connector.connect(user = 'root', password='123456', host = 'localhost', database = 'mmt_db')
+        db = mysql.connector.connect(user = 'root', password='BTS@forever2809', host = 'localhost', database = 'mmt_db')
         mycursor = db.cursor()
         query = f"INSERT INTO account (username, pass, ipaddr, fname, fpath) VALUES (%s, %s, %s, %s, %s)"
         values = (username, passw, ipaddr, fname, fpath)
@@ -169,7 +169,7 @@ class Server:
     
     def ping_client(self, username):
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db')
             mycursor = db.cursor()
 
             query = f"SELECT * FROM account WHERE username = '{username}' AND fname = '_'"
@@ -220,7 +220,7 @@ class Server:
     def discover(self, username):
         list_file = []
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db')
             mycursor = db.cursor()
             query = f"SELECT fname FROM account WHERE username = '{username}' AND fname != '_';"
             mycursor.execute(query)
@@ -241,7 +241,7 @@ class Server:
         #hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db')
             mycursor = db.cursor()
 
             query = "SELECT * FROM account WHERE fname = '_' AND username = %s AND pass = %s"
@@ -283,7 +283,7 @@ class Server:
 
         if username and password:
             try:
-                db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+                db = mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db')
                 mycursor = db.cursor()
 
                 # Check if the username already exists
@@ -310,7 +310,7 @@ class Server:
     def discover_file(self, fname, client_username):
         list_clients = []
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db')
             mycursor = db.cursor()
             query = "SELECT username, ipaddr, _port FROM account WHERE fname = '_' AND username IN (SELECT username FROM account WHERE fname = %s) AND username <> %s;"
             mycursor.execute(query, (fname, client_username))
@@ -333,7 +333,7 @@ class Server:
     
     def handle_client_delete_file(self, fname, username):
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db')
             mycursor = db.cursor()
 
             # Check if the file exists for the user
@@ -362,7 +362,7 @@ class Server:
             
     def add_client(self, username, password):
         try:
-            with mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db') as db:
+            with mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db') as db:
                 with db.cursor() as mycursor:
                     # Check if the username already exists
                     mycursor.execute(f"SELECT username FROM account WHERE username = '{username}'")
@@ -384,7 +384,7 @@ class Server:
 
     def delete_client(self, username):
         try:
-            with mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db') as db:
+            with mysql.connector.connect(user='root', password='BTS@forever2809', host='localhost', database='mmt_db') as db:
                 with db.cursor() as mycursor:
                     # Check if the username exists
                     mycursor.execute(f"SELECT * FROM account WHERE username = '{username}'")

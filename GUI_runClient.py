@@ -210,7 +210,7 @@ class MyGUI:
         instruction_label = tk.Label(self.instruction_frame, text="Instructions:")
         instruction_label.pack(pady=10)
 
-        instruction_text = "To publish a file: publish <localfile> <filenameinrepo> <pathfileinrepo>\n" \
+        instruction_text = "To publish a file: publish <localfile> <filenameinrepo>\n" \
                             "To download a file: fetch <filename>\n" \
                             "To delete a file: delete <filename> <pathfilename>"\
                             "To disconnect server: end"
@@ -235,11 +235,10 @@ class MyGUI:
         # Add your logic to handle different commands
         if message.startswith("publish"):
                     parts = message.split(" ")
-                    if len(parts) == 4:
+                    if len(parts) == 3:
                         lname = parts[1]
                         fname = parts[2]
-                        fpath = parts[3]
-                        result = self.client.publish_file(lname, fname, fpath)                   
+                        result = self.client.publish_file(lname, fname, './repo_publish')                   
                         if result:
                             tkinter.messagebox.showinfo("Publish successful.","Continue do what you want")
                             self.instruction_frame.pack_forget()  # Hide the current frame
