@@ -136,7 +136,9 @@ class Server:
                 break
     
     def add_to_database(self, username, passw, port, ipaddr, fname, fpath):
+
         db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
+
         mycursor = db.cursor()
         query = f"INSERT INTO account (username, pass, ipaddr, fname, fpath) VALUES (%s, %s, %s, %s, %s)"
         values = (username, passw, ipaddr, fname, fpath)
@@ -166,6 +168,7 @@ class Server:
     
     def ping_client(self, username):
         try:
+
             db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
             mycursor = db.cursor()
 
@@ -217,7 +220,9 @@ class Server:
     def discover(self, username):
         list_file = []
         try:
+
             db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
+
             mycursor = db.cursor()
             query = f"SELECT fname FROM account WHERE username = '{username}' AND fname != '_';"
             mycursor.execute(query)
@@ -238,7 +243,9 @@ class Server:
         #hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
         try:
+
             db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
+
             mycursor = db.cursor()
 
             query = "SELECT * FROM account WHERE fname = '_' AND username = %s AND pass = %s"
@@ -280,7 +287,9 @@ class Server:
 
         if username and password:
             try:
+
                 db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
+
                 mycursor = db.cursor()
 
                 # Check if the username already exists
@@ -307,7 +316,9 @@ class Server:
     def discover_file(self, fname, client_username):
         list_clients = []
         try:
+
             db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
+
             mycursor = db.cursor()
             query = "SELECT username, ipaddr, _port FROM account WHERE fname = '_' AND username IN (SELECT username FROM account WHERE fname = %s) AND username <> %s;"
             mycursor.execute(query, (fname, client_username))
@@ -331,6 +342,7 @@ class Server:
     def handle_client_delete_file(self, fname, username):
         try:
             db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
+
             mycursor = db.cursor()
 
             # Check if the file exists for the user
@@ -360,6 +372,7 @@ class Server:
     def add_client(self, username, password):
         try:
             with psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci') as db:
+
                 with db.cursor() as mycursor:
                     # Check if the username already exists
                     mycursor.execute(f"SELECT username FROM account WHERE username = '{username}'")
@@ -381,7 +394,9 @@ class Server:
 
     def delete_client(self, username):
         try:
+
             with psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci') as db:
+
                 with db.cursor() as mycursor:
                     # Check if the username exists
                     mycursor.execute(f"SELECT * FROM account WHERE username = '{username}'")

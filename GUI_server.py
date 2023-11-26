@@ -289,6 +289,7 @@ class Server:
                 host='kiouni.db.elephantsql.com',
                 database='mxmghkci'
             )
+
             mycursor = db.cursor()
             query = f"SELECT fname FROM account WHERE username = '{username}' AND fname != '_';"
             mycursor.execute(query)
@@ -362,6 +363,7 @@ class Server:
                     host='kiouni.db.elephantsql.com',
                     database='mxmghkci'
                 )
+
                 mycursor = db.cursor()
 
                 # Check if the username already exists
@@ -388,12 +390,14 @@ class Server:
     def discover_file(self, fname, client_username):
         list_clients = []
         try:
+
             db = psycopg2.connect(
                 user='mxmghkci',
                 password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx',
                 host='kiouni.db.elephantsql.com',
                 database='mxmghkci'
             )
+
             mycursor = db.cursor()
             query = "SELECT username, ipaddr, _port FROM account WHERE fname = '_' AND username IN (SELECT username FROM account WHERE fname = %s) AND username <> %s;"
             mycursor.execute(query, (fname, client_username))
@@ -422,6 +426,7 @@ class Server:
                 host='kiouni.db.elephantsql.com',
                 database='mxmghkci'
             )
+
             mycursor = db.cursor()
 
             # Check if the file exists for the user
@@ -449,8 +454,7 @@ class Server:
             db.close()
             
     def add_client(self, username, password):
-        try:
-                    
+        try:         
             with psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci') as db:
                 with db.cursor() as mycursor:
                     # Check if the username already exists
@@ -474,6 +478,7 @@ class Server:
     def delete_client(self, username):
         try:
             with psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci') as db:
+
                 with db.cursor() as mycursor:
                     # Check if the username exists
                     mycursor.execute(f"SELECT * FROM account WHERE username = '{username}'")
