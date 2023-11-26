@@ -12,6 +12,7 @@ CREATE TABLE account (
 );
 
 Hướng dẫn sử dụng:
+Trước hết, vui lòng tạo repo_recieve sẵn trong thư mục
 1. Đối với phiên bản terminal:
 - Với server: python runServer.py
 - Với client: python runClient.py
