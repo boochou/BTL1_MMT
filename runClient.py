@@ -39,7 +39,7 @@ except KeyboardInterrupt:
 
 def help_list():
 
-    print("To publish a file: publish <localfile> <filenameinrepo> <pathfileinrepo>")
+    print("To publish a file: publish <localfile> <filenameinrepo>")
     print("To download a file: fetch <filename>")
     print("To delete a file: delete <filename> <pathfilename>")
     print("To disconnect server: end")
@@ -59,14 +59,13 @@ def handle_command():
                     break
                 if message.startswith("publish"):
                     parts = message.split(" ")
-                    if len(parts) == 4:
+                    if len(parts) == 3:
                         lname = parts[1]
                         fname = parts[2]
-                        fpath = parts[3]
                     else:
                         print("Please enter the correct syntax!")
                         continue
-                    result = client.publish_file(lname, fname, fpath)                   
+                    result = client.publish_file(lname, fname, './repo_publish')                   
                     if result:
                         print("Publish successful.")
                     else:

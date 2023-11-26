@@ -245,8 +245,12 @@ class Client:
                 s.close()
 
     def receive_file(self, file_name, addr): #ahihi
-        dir = "./repo_recieve"
-        save_path = os.path.join(dir,file_name)
+        dir = "./repo_receive"  # Corrected typo in the directory name
+        save_path = os.path.join(dir, file_name)
+
+        # Create the directory if it does not exist
+        if not os.path.exists(dir):
+            os.makedirs(dir)
         host = self.get_local_ip() #addr to listen recieve file
         port = 12346
         #des_ip = input("The selected IP: ")

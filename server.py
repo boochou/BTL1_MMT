@@ -1,11 +1,8 @@
 import os
 import socket
 import threading
-import sqlite3
 import json
-import hashlib
-import mysql.connector
-
+import psycopg2
 IP = socket.gethostbyname(socket.gethostname()) #"127.0.0.1" #HOST #loopback
 SERVER_PORT = 56789
 ADDRESS = (IP, SERVER_PORT)
@@ -68,7 +65,7 @@ class Server:
                         file_name, client_username = fname_username
                         list_clients = self.discover_file(file_name, client_username)
                         try:
-                            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+                            db =psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
                             mycursor = db.cursor()
                             query = f"SELECT username FROM account WHERE fname = '{file_name}';"
                             mycursor.execute(query)
@@ -139,7 +136,7 @@ class Server:
                 break
     
     def add_to_database(self, username, passw, port, ipaddr, fname, fpath):
-        db = mysql.connector.connect(user = 'root', password='123456', host = 'localhost', database = 'mmt_db')
+        db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
         mycursor = db.cursor()
         query = f"INSERT INTO account (username, pass, ipaddr, fname, fpath) VALUES (%s, %s, %s, %s, %s)"
         values = (username, passw, ipaddr, fname, fpath)
@@ -169,7 +166,7 @@ class Server:
     
     def ping_client(self, username):
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
             mycursor = db.cursor()
 
             query = f"SELECT * FROM account WHERE username = '{username}' AND fname = '_'"
@@ -220,7 +217,7 @@ class Server:
     def discover(self, username):
         list_file = []
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
             mycursor = db.cursor()
             query = f"SELECT fname FROM account WHERE username = '{username}' AND fname != '_';"
             mycursor.execute(query)
@@ -241,7 +238,7 @@ class Server:
         #hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
             mycursor = db.cursor()
 
             query = "SELECT * FROM account WHERE fname = '_' AND username = %s AND pass = %s"
@@ -283,7 +280,7 @@ class Server:
 
         if username and password:
             try:
-                db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+                db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
                 mycursor = db.cursor()
 
                 # Check if the username already exists
@@ -310,7 +307,7 @@ class Server:
     def discover_file(self, fname, client_username):
         list_clients = []
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
             mycursor = db.cursor()
             query = "SELECT username, ipaddr, _port FROM account WHERE fname = '_' AND username IN (SELECT username FROM account WHERE fname = %s) AND username <> %s;"
             mycursor.execute(query, (fname, client_username))
@@ -333,7 +330,7 @@ class Server:
     
     def handle_client_delete_file(self, fname, username):
         try:
-            db = mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db')
+            db = psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci')
             mycursor = db.cursor()
 
             # Check if the file exists for the user
@@ -362,7 +359,7 @@ class Server:
             
     def add_client(self, username, password):
         try:
-            with mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db') as db:
+            with psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci') as db:
                 with db.cursor() as mycursor:
                     # Check if the username already exists
                     mycursor.execute(f"SELECT username FROM account WHERE username = '{username}'")
@@ -378,13 +375,13 @@ class Server:
                         self.can_publish = True
                         return "1"
 
-        except mysql.connector.Error as db_error:
+        except psycopg2.Error as db_error:
             print(f"Database error during add new client: {db_error}")
             return "3"
 
     def delete_client(self, username):
         try:
-            with mysql.connector.connect(user='root', password='123456', host='localhost', database='mmt_db') as db:
+            with psycopg2.connect( user='mxmghkci', password='fvWHkX-z0HWiPIn2fzf828kxGDDc1gYx', host='kiouni.db.elephantsql.com', database='mxmghkci') as db:
                 with db.cursor() as mycursor:
                     # Check if the username exists
                     mycursor.execute(f"SELECT * FROM account WHERE username = '{username}'")
@@ -399,7 +396,7 @@ class Server:
                         print(f"User with username '{username}' not found.")
                         return "3"  # User not found
 
-        except mysql.connector.Error as db_error:
+        except psycopg2.Error as db_error:
             print(f"Database error during delete client: {db_error}")
             return "3"  # Error during deletion
 
