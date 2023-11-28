@@ -33,6 +33,7 @@ class Server:
         while True:
             try:
                 message = conn.recv(1024).decode(FORMAT)
+                print(str(message))
                 if not message:
                     break
                 if message == "CONNECT":
@@ -41,7 +42,7 @@ class Server:
                     self.handle_signup(conn, addr)
                 elif message == "SIGNIN":
                     self.handle_login(conn, addr)
-                elif message == "707 EXIT":
+                elif "707 EXIT" in message:
                     self.clietnts -= 1 #client disconnect
                     conn.close()
                     break
@@ -146,7 +147,6 @@ class Server:
         try:
             mycursor.execute(query, values)
             db.commit()
-            print("Successfully added to the database")
         except Exception as e:
             print(f"Error adding to the database: {e}")
             db.rollback()

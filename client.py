@@ -376,7 +376,8 @@ class Client:
         print("client off !!")
         try:
             self.server_status = False
-            self.socket.send("707 exit".encode(FORMAT))
+            message = ("707 EXIT", self.username, IP)
+            self.socket.send(json.dumps(message).encode(FORMAT))
             self.socket.close()
         except:
             None
