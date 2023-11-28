@@ -191,17 +191,7 @@ class Client:
             return False
 
     def get_local_ip(self):
-        # Create a socket to get the local IP address
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        try:
-            # Doesn't have to be reachable
-            s.connect(('10.255.255.255', 1))
-            local_ip = s.getsockname()[0]
-        except Exception:
-            local_ip = '127.0.0.1'
-        finally:
-            s.close()
-        return local_ip
+        return socket.gethostbyname(socket.gethostname())
     
     def send_file(self, data):
         path = "./repo_publish"
